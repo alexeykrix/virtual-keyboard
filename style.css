@@ -1,0 +1,119 @@
+body, div, textarea {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #dad9d9;
+}
+.key {
+  cursor: pointer;
+  transition: 0.1s;
+  padding: 0 7px 0 5px;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  vertical-align: center;
+  line-height: 35px;
+  width: 35px;
+  height: 35px;
+  border-radius: 15px;
+  border: 1px solid #4e4e4e;
+  background: #1f1f1f;
+  color: #ededed;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.key[data-code="Space"] {  /*  space */
+  width: 275px;
+}
+.key[data-code="Backspace"],      
+.key[data-code="CapsLock"],
+.key[data-code="Enter"] {            
+  width: 75px;  
+}
+.key[data-code="ShiftLeft"] {
+  width: 115px;  
+}
+
+.key.hot {  /*  hot keys */
+  border-color: #1f1f1f;
+  background: #ffa90a;
+  color: #1f1f1f;
+}
+.key:hover:not(.active) {
+  opacity: 0.5;
+}
+.key.active {
+  border-radius: 10px;
+  font-weight: 800;
+  transform: scale(0.9);
+  background: #4e4e4e;
+}
+.key.hot.active {
+  background: #9b7f4a;
+}
+
+.textview {
+  outline: none;
+  resize: none;
+  display: block;
+  overflow: hidden;
+  overflow-y: auto;
+  font-size: 36px;
+  line-height: 35px;
+  font-family: 'Roboto';
+  color: #ededed;
+  box-shadow: 0px 0px 10px #1f1f1f;
+  border-radius: 20px;
+  background: #1f1f1f;
+  border: 1px solid #ffffff;
+  padding: 10px;
+  width: 610px;
+  margin: 30px auto;
+  height: 215px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::selection {
+  color: #1f1f1f;
+  background: #fff;
+}
+
+.kboard {
+  position: relative;
+  box-shadow: 0px 0px 10px #1f1f1f;
+  border-radius: 20px;
+  background: #1f1f1f;
+  border: 1px solid #ffffff;
+  padding: 10px;
+  width: 610px;
+  margin: 30px auto;
+  text-align: justify;
+  user-select: none;
+}
+
+.kboard::after,
+.kboard::before {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 50px #1f1f1f,
+              inset 0px 0px 10px rgba(0, 0, 0, 0.4);
+}
+
+.kboard::before {
+  top: -40px;
+  left: 50px;
+}
+.kboard::after {
+  top: -40px;
+  right: 50px;
+}
