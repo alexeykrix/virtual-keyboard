@@ -1,5 +1,5 @@
-const keysEn = 
-'<div class="key" data-code="Backquote">`</div>   '+`
+const keysEn =
+  '<div class="key" data-code="Backquote">`</div>   ' + `
 <div class="key" data-code="Digit1">1</div>
 <div class="key" data-code="Digit2">2</div>
 <div class="key" data-code="Digit3">3</div>
@@ -132,8 +132,8 @@ const keysEnShift = `
 <div class="key hot" data-code="ArrowRight">▷</div>
 `;
 
-const keysRu = 
-'<div class="key" data-code="Backquote">ё</div>   '+`
+const keysRu =
+  '<div class="key" data-code="Backquote">ё</div>   ' + `
 <div class="key" data-code="Digit1">1</div>
 <div class="key" data-code="Digit2">2</div>
 <div class="key" data-code="Digit3">3</div>
@@ -199,8 +199,8 @@ const keysRu =
 <div class="key hot" data-code="ArrowRight">▷</div>
 `;
 
-const keysRuShift = 
-'<div class="key" data-code="Backquote">ё</div>   '+`
+const keysRuShift =
+  '<div class="key" data-code="Backquote">ё</div>   ' + `
 <div class="key" data-code="Digit1">!</div>
 <div class="key" data-code="Digit2">"</div>
 <div class="key" data-code="Digit3">№</div>
@@ -281,9 +281,24 @@ body.appendChild(spec);
 
 let lang = 'en';
 
+
+const local = localStorage.getItem('lang');
+
+if (local) {
+  lang = localStorage.getItem('lang');
+} else {
+  lang = 'en';
+}
+
+if (lang === 'en') {
+  keyboard.innerHTML = keysEn;
+} else {
+  keyboard.innerHTML = keysRu;
+}
+
 const toUpper = () => {
   keyboard.childNodes.forEach(key => {
-    if (key.classList == 'key')  {
+    if (key.classList == 'key') {
       key.textContent = key.textContent.toUpperCase();
     }
   });
@@ -291,7 +306,7 @@ const toUpper = () => {
 
 const toLower = () => {
   keyboard.childNodes.forEach(key => {
-    if (key.classList == 'key')  {
+    if (key.classList == 'key') {
       key.textContent = key.textContent.toLowerCase();
     }
   });
@@ -299,26 +314,26 @@ const toLower = () => {
 
 let caps = false;
 
-const capsEn = () =>  {
+const capsEn = () => {
   if (caps === false) {
     caps = true;
     toUpper();
     document.querySelector('.key[data-code="CapsLock"]')
-    .classList.add('active');
+      .classList.add('active');
     return;
   }
   if (caps === true) {
     caps = false;
     toLower();
     document.querySelector('.key[data-code="CapsLock"]')
-    .classList.remove('active');
+      .classList.remove('active');
     return;
   }
 }
 
 let shift = false;
 
-const shiftEn = () =>  {
+const shiftEn = () => {
   if (shift === false) {
     keyboard.innerHTML = keysEnShift;
     if (caps === true) toLower();
@@ -335,7 +350,7 @@ const shiftEn = () =>  {
   }
 }
 
-const shiftRu = () =>  {
+const shiftRu = () => {
   if (shift === false) {
     keyboard.innerHTML = keysRuShift;
     if (caps === true) toLower();
@@ -352,99 +367,99 @@ const shiftRu = () =>  {
   }
 }
 
-const shiftThis = () =>  {
+const shiftThis = () => {
   if (lang === 'en') shiftEn();
   if (lang === 'ru') shiftRu();
 }
 
-const getCaret = () => { 
-  if (textview.selectionStart) { 
-    return textview.selectionStart; 
-  } else if (document.selection) { 
-    textview.focus(); 
-    let r = document.selection.createRange(); 
-    if (r == null) return 0; 
-    let re = textview.createTextRange(), 
-        rc = re.duplicate(); 
-    re.moveToBookmark(r.getBookmark()); 
-    rc.setEndPoint('EndToStart', re); 
-    return rc.text.length; 
-  }  
-  return 0; 
+const getCaret = () => {
+  if (textview.selectionStart) {
+    return textview.selectionStart;
+  } else if (document.selection) {
+    textview.focus();
+    let r = document.selection.createRange();
+    if (r == null) return 0;
+    let re = textview.createTextRange(),
+      rc = re.duplicate();
+    re.moveToBookmark(r.getBookmark());
+    rc.setEndPoint('EndToStart', re);
+    return rc.text.length;
+  }
+  return 0;
 }
 
 const backspacePressed = () => {
   let pos = getCaret();
   if (pos === 0) return;
-  textview.value = textview.value.substring(0, pos-1) +
-   textview.value.substring(pos);
-  textview.setSelectionRange(pos-1, pos-1);
+  textview.value = textview.value.substring(0, pos - 1) +
+    textview.value.substring(pos);
+  textview.setSelectionRange(pos - 1, pos - 1);
   textview.focus();
 }
 const delPressed = () => {
   let pos = getCaret();
   textview.value = textview.value.substring(0, pos) +
-   textview.value.substring(pos+1);
+    textview.value.substring(pos + 1);
   textview.setSelectionRange(pos, pos);
   textview.focus();
 }
 const tabPressed = () => {
   let pos = getCaret();
   textview.value = textview.value.substring(0, pos) + '    ' +
-   textview.value.substring(pos);
-  textview.setSelectionRange(pos+4, pos+4);
+    textview.value.substring(pos);
+  textview.setSelectionRange(pos + 4, pos + 4);
   textview.focus();
 }
 const enterPressed = () => {
   let pos = getCaret();
-  textview.value = textview.value.substring(0, pos) + '\n' 
-  + textview.value.substring(pos);
-  textview.setSelectionRange(pos+1, pos+1);
+  textview.value = textview.value.substring(0, pos) + '\n' +
+    textview.value.substring(pos);
+  textview.setSelectionRange(pos + 1, pos + 1);
   textview.focus();
 }
 const spacePressed = () => {
   let pos = getCaret();
   if (pos !== textview.value.length) {
-  textview.value = textview.value.substring(0, pos-1) + ' ' +
-   textview.value.substring(pos-1);
-  textview.setSelectionRange(pos, pos);
+    textview.value = textview.value.substring(0, pos - 1) + ' ' +
+      textview.value.substring(pos - 1);
+    textview.setSelectionRange(pos, pos);
   } else {
-  textview.value = textview.value.substring(0, pos) + ' ' +
-   textview.value.substring(pos);
-  textview.setSelectionRange(pos+1, pos+1);
+    textview.value = textview.value.substring(0, pos) + ' ' +
+      textview.value.substring(pos);
+    textview.setSelectionRange(pos + 1, pos + 1);
   }
   textview.focus();
 }
 const someKeyPressed = (key) => {
   let pos = getCaret();
   textview.value = textview.value.substring(0, pos) + key +
-   textview.value.substring(pos);
-  textview.setSelectionRange(pos+1, pos+1);
+    textview.value.substring(pos);
+  textview.setSelectionRange(pos + 1, pos + 1);
   textview.focus();
 }
 
 ////////              MOUSE
 let mouseup = {
-  shift : true,
-  caps : true
+  shift: true,
+  caps: true
 }
-keyboard.addEventListener('mousedown', e => { 
+keyboard.addEventListener('mousedown', e => {
   if (e.target.dataset.code == 'ShiftLeft' ||
-      e.target.dataset.code == 'ShiftRight') { // нажат ли шифт
-    if  (mouseup.shift === false) return;
+    e.target.dataset.code == 'ShiftRight') { // нажат ли шифт
+    if (mouseup.shift === false) return;
     shiftThis();
     mouseup.shift = false;
   }
-  if (e.target.dataset.code == 'CapsLock') {   //  нажат ли капс
-    if  (mouseup.caps === false) return;
+  if (e.target.dataset.code == 'CapsLock') { //  нажат ли капс
+    if (mouseup.caps === false) return;
     capsEn();
     document.querySelector('.key[data-code="CapsLock"]')
-    .classList.add('active');
+      .classList.add('active');
     mouseup.caps = false;
   }
   if (e.target.classList.value.indexOf('key') !== -1) {
     e.target.classList.add('active');
-    
+
     if (e.target.dataset.code == 'Space') spacePressed();
     if (e.target.dataset.code == 'Backspace') backspacePressed();
     if (e.target.dataset.code == 'Delete') delPressed();
@@ -452,11 +467,11 @@ keyboard.addEventListener('mousedown', e => {
     if (e.target.dataset.code == 'Enter') enterPressed();
     else if (e.target.dataset.code == 'Space') {
       textview.value += ' ';
-    } else if (e.target.classList.value.indexOf('hot') == -1 || 
-              e.target.dataset.code == 'ArrowUp' ||
-              e.target.dataset.code == 'ArrowLeft' ||
-              e.target.dataset.code == 'ArrowDown' ||
-              e.target.dataset.code == 'ArrowRight') {
+    } else if (e.target.classList.value.indexOf('hot') == -1 ||
+      e.target.dataset.code == 'ArrowUp' ||
+      e.target.dataset.code == 'ArrowLeft' ||
+      e.target.dataset.code == 'ArrowDown' ||
+      e.target.dataset.code == 'ArrowRight') {
       someKeyPressed(e.target.textContent);
     }
     if (e.target.dataset.code === 'CapsLock') {
@@ -464,14 +479,14 @@ keyboard.addEventListener('mousedown', e => {
     }
   }
 
-  
+
 });
 /////   MOUSE  UP
 keyboard.addEventListener('mouseup', e => {
   document.querySelectorAll('.key').forEach(key => {
     key.classList.remove('active');
   });
-  
+
   if (e.target.dataset.code == 'ShiftLeft' || e.target.dataset.code == 'ShiftRight') {
     shiftThis();
     mouseup.shift = true;
@@ -487,27 +502,27 @@ document.querySelector('.textview').addEventListener('keydown', e => {
 });
 
 let keyup = {
-  shift : true,
-  caps : true,
-  ctrl : true,
-  alt : true
+  shift: true,
+  caps: true,
+  ctrl: true,
+  alt: true
 }
 
 document.addEventListener('keydown', e => {
-  if (e.code == 'Tab'||  e.code == 'ArrowUp' ||
-      e.code == 'ArrowLeft' || e.code == 'ArrowDown' ||
-      e.code == 'ArrowRight') e.preventDefault();
+  if (e.code == 'Tab' || e.code == 'ArrowUp' ||
+    e.code == 'ArrowLeft' || e.code == 'ArrowDown' ||
+    e.code == 'ArrowRight') e.preventDefault();
 
   if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') { // нажат ли шифт
-    if  (keyup.shift === false) return;
+    if (keyup.shift === false) return;
     shiftThis();
     keyup.shift = false;
   }
-  if (e.code == 'CapsLock') {   //  нажат ли капс
-    if  (keyup.caps === false) return;
+  if (e.code == 'CapsLock') { //  нажат ли капс
+    if (keyup.caps === false) return;
     capsEn();
     document.querySelector('.key[data-code="CapsLock"]')
-    .classList.add('active');
+      .classList.add('active');
     keyup.caps = false;
   }
   if (e.code == 'ControlLeft') { // нажат ли ктрл
@@ -526,17 +541,18 @@ document.addEventListener('keydown', e => {
       lang = 'en';
       if (caps === true) toUpper();
     }
+    localStorage.setItem('lang', lang);
   }
 
   document.querySelectorAll('.key').forEach(key => {
     if (key.dataset.code == e.code) {
       key.classList.add('active');
-      if (key.classList != 'key hot active' || 
-          key.dataset.code == 'ArrowUp' ||
-          key.dataset.code == 'ArrowLeft' ||
-          key.dataset.code == 'ArrowDown' ||
-          key.dataset.code == 'ArrowRight') {
-            someKeyPressed(key.textContent);
+      if (key.classList != 'key hot active' ||
+        key.dataset.code == 'ArrowUp' ||
+        key.dataset.code == 'ArrowLeft' ||
+        key.dataset.code == 'ArrowDown' ||
+        key.dataset.code == 'ArrowRight') {
+        someKeyPressed(key.textContent);
       }
     }
   });
@@ -552,7 +568,7 @@ document.addEventListener('keyup', e => {
   document.querySelectorAll('.key').forEach(key => {
     key.classList.remove('active');
   });
-  
+
   if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') {
     shiftThis();
     keyup.shift = true;
@@ -563,5 +579,3 @@ document.addEventListener('keyup', e => {
   if (caps === true) document.querySelector('.key[data-code="CapsLock"]')
     .classList.add('active');
 });
-
-keyboard.innerHTML = keysEn;
