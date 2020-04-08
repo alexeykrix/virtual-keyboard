@@ -117,3 +117,10 @@ body {
   top: -40px;
   right: 50px;
 }
+
+.sometext {
+  color: #4e4e4e;
+  text-align: center;
+  font-size: 18px;
+  font-family: monospace;
+}
